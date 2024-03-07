@@ -280,7 +280,7 @@ namespace WindowsFormsApp1_2
             if (TryParseLine(lineTextBoxes, out Line lineBC))
             {
                 DrawLine(chart.Series["Lines"], lineBC, new[] { "E", "F" });
-                if (LineMatrixIsValid(GetLineMatrix()))
+                if (PointMatrixIsValid(GetLineMatrix()))
                 {
                     chart.Series["TransfLine"].Points.Clear();
                     Line transformedLineBC = TransformLine(lineBC, GetLineMatrix());
@@ -291,7 +291,7 @@ namespace WindowsFormsApp1_2
             if (TryParseTriangle(triangle1TextBoxes, out Triangle triangleDEF))
             {
                 DrawTriangle(chart.Series["Triangles"], triangleDEF, new[] { "B", "C", "D" });
-                if (Triangle1MatrixIsValid(GetTriangle1Matrix()))
+                if (PointMatrixIsValid(GetTriangle1Matrix()))
                 {
                     chart.Series["TransfTriangles"].Points.Clear();
                     Triangle transformedTriangleDEF = TransformTriangle(triangleDEF, GetTriangle1Matrix());
@@ -312,35 +312,6 @@ namespace WindowsFormsApp1_2
             chart.ChartAreas["MainArea"].RecalculateAxesScale();
             //AdjustYAxisScale();
         }
-
-        //private void AdjustYAxisScale()
-        //{
-        //    int blockSize = 100;
-
-        //    // generates random data (i.e. 30 * blockSize random numbers)
-        //    Random rand = new Random();
-        //    var valuesArray = Enumerable.Range(0, blockSize * 30).Select(x => rand.Next(1, 10)).ToArray();
-
-        //    var chartArea = chart.ChartAreas["MainArea"];
-        //    chartArea.AxisX.Minimum = -100;
-        //    chartArea.AxisX.Maximum = valuesArray.Length;
-
-        //    // enable autoscroll
-        //    chartArea.CursorX.AutoScroll = true;
-
-        //    // let's zoom to [0,blockSize] (e.g. [0,100])
-        //    chartArea.AxisX.ScaleView.Zoomable = true;
-        //    chartArea.AxisX.ScaleView.SizeType = DateTimeIntervalType.Number;
-        //    int position = 0;
-        //    int size = blockSize;
-        //    chartArea.AxisX.ScaleView.Zoom(position, size);
-
-        //    // disable zoom-reset button (only scrollbar's arrows are available)
-        //    chartArea.AxisX.ScrollBar.ButtonStyle = ScrollBarButtonStyles.SmallScroll;
-
-        //    // set scrollbar small change to blockSize (e.g. 100)
-        //    chartArea.AxisX.ScaleView.SmallScrollSize = blockSize;
-        //}
 
         private bool TryParseTranslationVector(TextBox[] textBoxes, out double[] translationVector)
         {
@@ -390,23 +361,6 @@ namespace WindowsFormsApp1_2
             return Math.Abs(determinant) > 1e-10; // Assuming a small value for floating-point error
         }
 
-        private bool LineMatrixIsValid(double[] matrix)
-        {
-            double determinant = matrix[0] * matrix[3] - matrix[1] * matrix[2];
-            return Math.Abs(determinant) > 1e-10; // Assuming a small value for floating-point error
-        }
-
-        private bool Triangle1MatrixIsValid(double[] matrix)
-        {
-            double determinant = matrix[0] * matrix[3] - matrix[1] * matrix[2];
-            return Math.Abs(determinant) > 1e-10; // Assuming a small value for floating-point error
-        }
-
-        private bool Triangle2MatrixIsValid(double[] matrix)
-        {
-            double determinant = matrix[0] * matrix[3] - matrix[1] * matrix[2];
-            return Math.Abs(determinant) > 1e-10; // Assuming a small value for floating-point error
-        }
 
         private bool TryParsePoint(TextBox[] textBoxes, out Point point)
         {
